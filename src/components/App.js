@@ -14,8 +14,11 @@ class App extends Component {
     }
   }
 
-  handleLogin() {
-    
+  handleLogin(data) {
+    fetch('http://localhost:3000/api/v1/users')
+      .then(response => response.json())
+      .then(users => this.setState({ userName: users }))
+      .catch(error => console.log(error));
   }
 
   handleProjectClick() {
@@ -27,11 +30,12 @@ class App extends Component {
   }
 
   render() {
+    console.log(this.state.userName);
     return (
       <div className="App">
         <nav>
           <p>Please login to start tracking your todos</p>
-          <Login handleLogin={this.handleLogin.bind(this)}/>
+          { !this.state.userName && <Login login={this.handleLogin.bind(this)}/>}
         </nav>
         <Projects handleProjectClick={this.handleProjectClick.bind(this)}/>
         <Todos handeleTodo={this.handeleTodo.bind(this)}/>
@@ -41,3 +45,11 @@ class App extends Component {
 }
 
 export default App;
+
+
+
+
+
+
+  
+
