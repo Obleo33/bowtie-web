@@ -1,9 +1,12 @@
 import React from 'react';
 
-const Todos = () => {
+const Todos = ({ todo, handleTodo }) => {
+
+	console.log();
 
 	return (
-		<div>I am the Todos component</div>
+		<div>{todo.name}
+		</div>
 	)
 }
 

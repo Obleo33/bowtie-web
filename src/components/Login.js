@@ -5,18 +5,18 @@ class Login extends React.Component {
 		super()
 		this.state = {
 			data: {},
-			new: false,
 		}
 	}
 
-	submitLogin(e, loginData) {
+	submitLogin(e) {
 		e.preventDefault();
-		this.props.login(loginData)
+		this.props.login(this.state.data)
 		this.setState({ data: {} })
 	}
 
 	handleChange(e) {
-		let updateData = Object.assign({}, this.state.data, {[e.target.id]: e.target.value})
+		let input = e.target.id.replace('login-','')
+		let updateData = Object.assign({}, this.state.data, {[input]: e.target.value})
     this.setState({ data: updateData });
 	}
 
@@ -24,34 +24,32 @@ class Login extends React.Component {
 		return (
 			<div>
 				<form>
-					{ this.state.new && 
-							<input id="name"
-									 	 type="text" 
-									 	 ref={(input) => { this.name = input }}
-									 	 value={ this.state.data.name || ''} 
-										 placeholder="type name"
-									 	 onChange= { this.handleChange.bind(this) }
-							/>
+					{ this.props.newUser && 
+						<input id="login-name"
+							 	 	 type="text" 
+							 	 	 ref={(input) => { this.name = input }}
+							 	 	 value={ this.state.data.name || ''} 
+								 	 placeholder="type name"
+							 	 	 onChange= { this.handleChange.bind(this) }
+						/>
 					}
-					<input id="email"
+					<input id="login-email"
 								 type="text"
 								 ref={(input) => { this.email = input }}
 								 value={ this.state.data.email || ''} 
 								 placeholder="type email"
 								 onChange= { this.handleChange.bind(this) }
 					/>
-					<input id="password"
+					<input id="login-password"
 								 type="password" 
 								 ref={(input) => { this.password = input }}
 								 value={ this.state.data.password || ''} 
 								 placeholder="type password"
 								 onChange= { this.handleChange.bind(this) }
 					/>
-					<button type="submit"
-          				onClick={(e) => this.submitLogin(e, {
-          					email: this.email.value,
-          					password: this.password.value,
-          				})}
+					<button id="login-submit"
+									type="login-submit"
+          				onClick={(e) => this.submitLogin(e)}
 				  >Login</button>
 				</form>
 			</div>
